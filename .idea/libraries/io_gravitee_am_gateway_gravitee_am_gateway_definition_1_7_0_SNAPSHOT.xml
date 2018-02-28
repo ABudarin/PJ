@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="io.gravitee.am.gateway:gravitee-am-gateway-definition:1.7.0-SNAPSHOT" type="repository">
+    <properties maven-id="io.gravitee.am.gateway:gravitee-am-gateway-definition:1.7.0-SNAPSHOT" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/gravitee/am/gateway/gravitee-am-gateway-definition/1.7.0-SNAPSHOT/gravitee-am-gateway-definition-1.7.0-SNAPSHOT.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/gravitee/common/gravitee-common/1.8.1/gravitee-common-1.8.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/uuid/java-uuid-generator/3.1.4/java-uuid-generator-3.1.4.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.21/slf4j-api-1.7.21.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
