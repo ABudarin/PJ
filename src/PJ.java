@@ -41,9 +41,7 @@ public class PJ {
                     sb.append("\n");
 
                 }
-                // System.out.println(sb.toString());
                 asdf = sb.toString();
-                // System.out.println(asdf);
             } else {
                 System.out.println("fail" + connection.getResponseCode() + "," + connection.getResponseMessage());
             }
@@ -54,9 +52,10 @@ public class PJ {
             if (connection != null)
                 connection.disconnect();
         }
+
+
         JSONObject outerObject = new JSONObject(asdf);
         JSONArray jsonArray = outerObject.getJSONArray("codes");
-        // System.out.println(jsonArray);
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject objectInArray = jsonArray.getJSONObject(i);
             String name = objectInArray.getString("name");
@@ -64,10 +63,6 @@ public class PJ {
             Pattern pattern = Pattern.compile("\\s–\\s");
             Matcher matcher = pattern.matcher(name);
             String asd = matcher.replaceAll(" - ");
-
-            // System.out.println(name);
-           //System.out.println(code);
-
             String[] subStr = asd.split("-", 5);
             Promo promo = new Promo();
             promo.setCode(code);
@@ -76,9 +71,8 @@ public class PJ {
                 promo.setGift(subStr[2]);
                 promo.setConditionString(subStr[3]);
                 promo.setCitiesString(subStr[4]);
-               Pattern pattern1 = Pattern.compile("-?\\d+");
+                Pattern pattern1 = Pattern.compile("-?\\d+");
                 Matcher matcher1 = pattern1.matcher(promo.getConditionString());
-               // String minSumm = matcher1.toString();
                 while (matcher1.find()){
                     String minSumm = matcher1.group();
                     double minSum = Double.parseDouble(minSumm);
@@ -90,9 +84,8 @@ public class PJ {
                 System.out.println("Name:            " + promo.getName());
                 System.out.println("Gift:            " + promo.getGift());
                 System.out.println("ConditionString: " + promo.getConditionString());
-                //System.out.println("minSumm:         " + promo.getMinSumm());
             }
-                        for (int j = 0; j < subStr.length; j++) {
+            for (int j = 0; j < subStr.length; j++) {
 
             }
             System.out.println("Code:             "+promo.getCode());
