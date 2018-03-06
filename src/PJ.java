@@ -54,7 +54,6 @@ public class PJ {
         }
 
 
-
         JSONObject outerObject = new JSONObject(asdf);
         JSONArray jsonArray = outerObject.getJSONArray("codes");
         for (int i = 0; i < jsonArray.length(); i++) {
