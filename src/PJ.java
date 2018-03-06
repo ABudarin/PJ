@@ -3,13 +3,18 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 
 
 public class PJ {
-    static  String asdf;
+    Promo code = new Promo();
+
+    static String asdf;
 
 
     public static void main(String[] args) {
@@ -22,7 +27,7 @@ public class PJ {
             connection.setRequestMethod("GET");
             connection.setUseCaches(false);
             connection.setConnectTimeout(250);
-            connection.setReadTimeout(250);
+            connection.setReadTimeout(0);
 
             connection.connect();
 
@@ -36,9 +41,9 @@ public class PJ {
                     sb.append("\n");
 
                 }
-                System.out.println(sb.toString());
+                // System.out.println(sb.toString());
                 asdf = sb.toString();
-                System.out.println(asdf);
+                // System.out.println(asdf);
             } else {
                 System.out.println("fail" + connection.getResponseCode() + "," + connection.getResponseMessage());
             }
@@ -51,21 +56,52 @@ public class PJ {
         }
         JSONObject outerObject = new JSONObject(asdf);
         JSONArray jsonArray = outerObject.getJSONArray("codes");
+        // System.out.println(jsonArray);
         for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject   objectInArray = jsonArray.getJSONObject(i);
+            JSONObject objectInArray = jsonArray.getJSONObject(i);
             String name = objectInArray.getString("name");
             String code = objectInArray.getString("code");
+            Pattern pattern = Pattern.compile("\\s–\\s");
+            Matcher matcher = pattern.matcher(name);
+            String asd = matcher.replaceAll(" - ");
 
-            System.out.println(name);
-            System.out.println(code);
+            // System.out.println(name);
+           //System.out.println(code);
+
+            String[] subStr = asd.split("-", 5);
+            Promo promo = new Promo();
+            promo.setCode(code);
+            if (subStr.length>1 &&subStr.length>4){
+                promo.setName(subStr[1]);
+                promo.setGift(subStr[2]);
+                promo.setConditionString(subStr[3]);
+                promo.setCitiesString(subStr[4]);
+               Pattern pattern1 = Pattern.compile("-?\\d+");
+                Matcher matcher1 = pattern1.matcher(promo.getConditionString());
+               // String minSumm = matcher1.toString();
+                while (matcher1.find()){
+                    String minSumm = matcher1.group();
+                    double minSum = Double.parseDouble(minSumm);
+                    promo.setMinSumm(minSum);
+                    System.out.println("minSumm           "+String.format("%.0f",promo.getMinSumm())+ " рубасов");
+                }
+
+
+                System.out.println("Name:            " + promo.getName());
+                System.out.println("Gift:            " + promo.getGift());
+                System.out.println("ConditionString: " + promo.getConditionString());
+                //System.out.println("minSumm:         " + promo.getMinSumm());
+            }
+                        for (int j = 0; j < subStr.length; j++) {
+
+            }
+            System.out.println("Code:             "+promo.getCode());
+
 
         }
+
+
     }
-
 }
-
-
-
-
 
 
