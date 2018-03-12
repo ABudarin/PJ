@@ -3,6 +3,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,6 +56,9 @@ public class PJ {
                 connection.disconnect();
         }
 
+        ArrayList<Promo> Codes = new ArrayList<Promo>();
+        ArrayList<Promo> Moscow = new ArrayList<Promo>();
+
 
         JSONObject outerObject = new JSONObject(asdf);
         JSONArray jsonArray = outerObject.getJSONArray("codes");
@@ -66,33 +72,61 @@ public class PJ {
             String[] subStr = asd.split("-", 5);
             Promo promo = new Promo();
             promo.setCode(code);
-            if (subStr.length>1 &&subStr.length>4){
+
+            if (subStr.length>4){
                 promo.setName(subStr[1]);
                 promo.setGift(subStr[2]);
                 promo.setConditionString(subStr[3]);
-                promo.setCitiesString(subStr[4]);
+                String text =subStr[4].toUpperCase();
+                promo.setCitiesString(text);
+                // boolean asdv  = text.contains("МОСКВА");
                 Pattern pattern1 = Pattern.compile("-?\\d+");
                 Matcher matcher1 = pattern1.matcher(promo.getConditionString());
                 while (matcher1.find()){
                     String minSumm = matcher1.group();
                     double minSum = Double.parseDouble(minSumm);
                     promo.setMinSumm(minSum);
-                    System.out.println("minSumm           "+String.format("%.0f",promo.getMinSumm())+ " рубасов");
                 }
+                if (text.contains("МОСКВА")==true ||text.contains("МО")==true||text.contains("ВСЕ ГОРОДА")==true)
+                    Moscow.add(promo);
 
 
-                System.out.println("Name:            " + promo.getName());
-                System.out.println("Gift:            " + promo.getGift());
-                System.out.println("ConditionString: " + promo.getConditionString());
-            }
-            for (int j = 0; j < subStr.length; j++) {
+                Codes.add(promo);
 
             }
-            System.out.println("Code:             "+promo.getCode());
-
 
         }
 
+
+      /*  for (int i = 0; i < Codes.size(); i++)
+        {
+
+            Promo currentCode = Codes.get(i);
+            System.out.println("Name:            "+currentCode.getName());
+            System.out.println("Condition:       "+currentCode.getConditionString());
+            System.out.println("Gift:            "+currentCode.getGift());
+            System.out.println("minSum:           "+String.format("%.0f",currentCode.getMinSumm()));
+            System.out.println("Cities:          "+currentCode.getCitiesString());
+            System.out.println("Code:             "+currentCode.getCode());
+
+       }*/
+        for (int i = 0; i < Moscow.size(); i++)
+        {
+
+            Promo currentCode = Moscow.get(i);
+            Collections.sort(Moscow, new Comparator<Promo>() {
+                public int compare(Promo o1, Promo o2) {
+                    return o1.getMinSumm().compareTo(o2.getMinSumm());
+                }
+            });
+
+            System.out.println("Name:            "+currentCode.getName());
+            System.out.println("Condition:       "+currentCode.getConditionString());
+            System.out.println("Gift:            "+currentCode.getGift());
+            System.out.println("minSum:           "+String.format("%.0f",currentCode.getMinSumm()));
+            System.out.println("Cities:          "+currentCode.getCitiesString());
+            System.out.println("Code:             "+currentCode.getCode());
+        }
 
     }
 }
