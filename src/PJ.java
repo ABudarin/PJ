@@ -1,3 +1,5 @@
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -9,13 +11,9 @@ import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 
 
 public class PJ {
-    Promo code = new Promo();
 
     static String asdf;
 
@@ -66,6 +64,7 @@ public class PJ {
             JSONObject objectInArray = jsonArray.getJSONObject(i);
             String name = objectInArray.getString("name");
             String code = objectInArray.getString("code");
+            //System.out.println(name);
             Pattern pattern = Pattern.compile("\\s–\\s");
             Matcher matcher = pattern.matcher(name);
             String asd = matcher.replaceAll(" - ");
@@ -98,6 +97,8 @@ public class PJ {
         }
 
 
+
+// list all codes
       /*  for (int i = 0; i < Codes.size(); i++)
         {
 
@@ -110,6 +111,9 @@ public class PJ {
             System.out.println("Code:             "+currentCode.getCode());
 
        }*/
+        JSONObject obj = new JSONObject();
+        JSONArray ar = new JSONArray();
+        Promo promo = new Promo();
         for (int i = 0; i < Moscow.size(); i++)
         {
 
@@ -120,14 +124,24 @@ public class PJ {
                 }
             });
 
+
+//list codes for Moscow
+                /*
             System.out.println("Name:            "+currentCode.getName());
             System.out.println("Condition:       "+currentCode.getConditionString());
             System.out.println("Gift:            "+currentCode.getGift());
             System.out.println("minSum:           "+String.format("%.0f",currentCode.getMinSumm()));
             System.out.println("Cities:          "+currentCode.getCitiesString());
-            System.out.println("Code:             "+currentCode.getCode());
-        }
+            System.out.println("Code:             "+currentCode.getCode());*/
 
+
+                // List to get json
+                ar.put("name: " +(currentCode.getName()+" - "+ currentCode.getConditionString()+" - "+currentCode.getGift()+" - "+currentCode.getCitiesString()+" - "+currentCode.getCode()));
+                ar.put("code: " + currentCode.getCode());
+        }
+        obj.put("Codes: ",ar);
+
+       System.out.println(obj);
     }
 }
 
